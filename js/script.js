@@ -14,6 +14,7 @@ Al click dell'utente sulle frecce verso sinistra o destra, l'immagine attiva div
 
 Milestone 2:
 Aggiungere il ciclo infinito del carosello. Ovvero se l'immagine attiva è la prima e l'utente clicca la freccia verso destra, l'immagine che deve attivarsi sarà l'ultima e viceversa per l'ultima immagine se l'utente clicca la freccia verso sinistra. */
+
 const images = [
     {
         image: 'img/01.webp',
@@ -37,9 +38,7 @@ const images = [
         text: 'Marvel\'s Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.',
     }
 ];
-// const images = ['img/01.webp','img/02.webp','img/03.webp','img/04.webp','img/05.webp'];
 
-// const carousel = document.querySelector('.my-carousel');
 const slides = document.querySelector('.slides');
 
 
@@ -55,10 +54,7 @@ slides.innerHTML += `<div class="slide">
 
 
 
-const allSlides = document.querySelectorAll('.slide');
-console.log('allSlides', allSlides, typeof allSlides);
-
-allSlides[0].classList.add('current'); 
+let allSlides = document.getElementsByClassName('slide');
 
 let currentSlide = 0;
 
@@ -66,26 +62,11 @@ const nextArrow = document.querySelector('.next')
 const previousArrow = document.querySelector('.previous')
 
 nextArrow.addEventListener('click',
-
-    // function () {
-    //     console.log('cliccato su next');
-        
-        // allSlides[currentSlide].classList.remove('current');
-        // currentSlide ++;
-
-        // allSlides[currentSlide].classList.add('current');
-
-    //     if (currentSlide == allSlides.length - 1) {
-    //         nextArrow.classList.add('hidden');
-    //     }
-
-    //     previousArrow.classList.remove('hidden');
-    // }
+ 
     function () {
-        for (let i = 1; i < images.length; i++) {
-            
-            console.log(images.length);
-            console.log(images[i].image);
+        document.getElementById("first").style.display = "none";
+
+        for (let i = 0; i < images.length; i++) {
 
             slides.innerHTML += `<div class="slide">
             <img src="${images[i].image}">
@@ -94,28 +75,17 @@ nextArrow.addEventListener('click',
             <p>${images[i].text}</p>  
             </div>
             </div>`;
-            
-            // slides.innerHTML = "";
-            // slides.innerHTML += `<div class="slide">
-            //                          <img src="${images[1].image}">
-            //                          <div class="texts">
-            //                              <h6>${images[1].title}</h6>
-            //                              <p>${images[1].text}</p>  
-            //                          </div>
-            //                      </div>`;
-            allSlides[currentSlide].classList.remove('current');
-            currentSlide ++;
-            allSlides[currentSlide].classList.add('current');
-    
-            
-
-            
+                
         }
-        // if (currentSlide == allSlides.length - 1) {
-        //     nextArrow.classList.add('hidden');
-        // }
 
-        // previousArrow.classList.remove('hidden');
+        allSlides[currentSlide].classList.remove('current');
+        currentSlide ++;
+        allSlides[currentSlide].classList.add('current');
+        
+        if (currentSlide == allSlides.length - 1) {
+            allSlides[currentSlide] = 0
+        }
+
     }
     
 );
@@ -123,18 +93,17 @@ nextArrow.addEventListener('click',
 previousArrow.addEventListener('click',
 
     function () {
-        console.log('cliccato su previous');
         
         allSlides[currentSlide].classList.remove('current');
         currentSlide --;
 
         allSlides[currentSlide].classList.add('current');
 
-        if (currentSlide == 0) {
-            previousArrow.classList.add('hidden');
+        if (currentSlide === 2) {
+            allSlides[currentSlide].classList.remove('current');
+            currentSlide = currentSlide + 5;
+            allSlides[currentSlide].classList.add('current');
         }
-
-        nextArrow.classList.remove('hidden')
     }
 
 );
